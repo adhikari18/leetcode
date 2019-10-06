@@ -6,12 +6,10 @@ Do not allocate extra space for another array, you must do this by modifying the
 The order of elements can be changed. It doesn't matter what you leave beyond the new length.
 */
 /*
-Runtime: 236 ms, faster than 98.16% of C# online submissions for Remove Element.
-Memory Usage: 29.3 MB, less than 11.11% of C# online submissions for Remove Element.
+Runtime: 244 ms, faster than 92.14% of C# online submissions for Remove Element.
+Memory Usage: 29 MB, less than 11.11% of C# online submissions for Remove Element.
 */
-namespace Leetcode
-{
-    public class Solution
+   public class Solution
     {
         public int RemoveElement(int[] nums, int val)
         {
@@ -19,29 +17,16 @@ namespace Leetcode
             int len = nums.Length;
             while (i < len)
             {
-                if (nums[i] != val)
-                {
-                    i++;
-                }
-                else
+                if (nums[i] == val)
                 {
                     nums[i] = nums[len - 1];
                     len--;
+                }
+                else
+                {
+                    i++;
                 }
             }
             return len;
         }
     }
-
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            //var intArr = new int[] { 0,1,2,2,3,0,4,2 }; // 2
-            var intArr = new int[] { 3,2,2,3 }; // 3
-            //var intArr = new int[] {2}; //3
-            var solution = new Solution();
-            var result = solution.RemoveElement(intArr, 3);
-        }
-    }
-}
