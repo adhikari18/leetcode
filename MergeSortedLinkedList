@@ -8,8 +8,8 @@ Output: 1->1->2->3->4->4
 */
 
 /*
-Runtime: 104 ms, faster than 26.67% of C# online submissions for Merge Two Sorted Lists.
-Memory Usage: 25 MB, less than 6.45% of C# online submissions for Merge Two Sorted Lists.
+Runtime: 92 ms, faster than 93.22% of C# online submissions for Merge Two Sorted Lists.
+Memory Usage: 24.7 MB, less than 6.45% of C# online submissions for Merge Two Sorted Lists.
 */
 namespace Leetcode
 {
