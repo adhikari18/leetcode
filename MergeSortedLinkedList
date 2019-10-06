@@ -1,0 +1,83 @@
+/*
+Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+
+Example:
+
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+*/
+
+/*
+Runtime: 104 ms, faster than 26.67% of C# online submissions for Merge Two Sorted Lists.
+Memory Usage: 25 MB, less than 6.45% of C# online submissions for Merge Two Sorted Lists.
+*/
+namespace Leetcode
+{
+
+    public class ListNode
+    {
+        public int val;
+        public ListNode next;
+        public ListNode(int x) { val = x; }
+    }
+
+    public class Solution
+    {
+        public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            var resultNode = new ListNode(0);
+            var tail = resultNode;
+
+            while (true)
+            {
+                if (l1 == null)
+                {
+                    tail.next = l2;
+                    break;
+                }
+
+                if (l2 == null)
+                {
+                    tail.next = l1;
+                    break;
+                }
+
+                if (l1.val <= l2.val)
+                {
+                    tail.next = l1;
+                    l1 = l1.next;
+                }
+                else
+                {
+                    tail.next = l2;
+                    l2 = l2.next;
+                }
+
+                tail = tail.next;
+            }
+            return resultNode.next;
+        }
+
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+             var l1Head = new ListNode(1);
+             var l1Second = new ListNode(2);
+             var l1Third = new ListNode(4);
+             l1Head.next = l1Second;
+             l1Second.next = l1Third;
+
+             var l2Head = new ListNode(1);
+             var l2Second = new ListNode(3);
+             var l2Third = new ListNode(4);
+             l2Head.next = l2Second;
+             l2Second.next = l2Third;
+
+             var solution = new Solution();
+            var result = solution.MergeTwoLists(l1Head, l2Head);
+        }
+    }
+}
