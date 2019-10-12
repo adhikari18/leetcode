@@ -1,0 +1,53 @@
+/*
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+
+If the last word does not exist, return 0.
+
+Note: A word is defined as a character sequence consists of non-space characters only.
+
+Example:
+
+Input: "Hello World"
+Output: 5
+*/
+/*
+Runtime: 68 ms, faster than 98.50% of C# online submissions for Length of Last Word.
+Memory Usage: 21 MB, less than 7.14% of C# online submissions for Length of Last Word.
+*/
+
+
+using System;
+
+namespace Leetcode
+{
+
+    public class Solution
+    {
+        public int LengthOfLastWord(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return 0;
+            s = s.TrimEnd();
+            for (int i = s.Length - 1; i >= 0 ; i--)
+            {
+                if (s[i] == ' ')
+                {
+                    return s.Length - 1 - i;
+                }
+            }
+
+            return s.Length;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var solution = new Solution();
+            var result = solution.LengthOfLastWord("Hlo Worlds");
+            Console.WriteLine(result);
+        }
+    }
+}
