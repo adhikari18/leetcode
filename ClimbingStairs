@@ -1,0 +1,60 @@
+/*
+You are climbing a stair case. It takes n steps to reach to the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Note: Given n will be a positive integer.
+*/
+/*
+Approach 4: Fibonacci Number
+Algorithm
+
+In the above approach we have used dpdp array where dp[i]=dp[i-1]+dp[i-2]dp[i]=dp[i−1]+dp[i−2]. It can be easily analysed that dp[i]dp[i] is nothing but i^{th}i 
+th
+  fibonacci number.
+
+Fib(n)=Fib(n-1)+Fib(n-2)Fib(n)=Fib(n−1)+Fib(n−2)
+
+Now we just have to find n^{th}n 
+th
+  number of the fibonacci series having 11 and 22 their first and second term respectively, i.e. Fib(1)=1Fib(1)=1 and Fib(2)=2Fib(2)=2.
+*/
+/*
+Runtime: 40 ms, faster than 72.46% of C# online submissions for Climbing Stairs.
+Memory Usage: 13.7 MB, less than 5.88% of C# online submissions for Climbing Stairs.
+*/
+
+using System;
+
+namespace Leetcode
+{
+    public class Solution
+    {
+        public int ClimbStairs(int n)
+        {
+            if (n == 1)
+            {
+                return 1;
+            }
+            int first = 1;
+            int second = 2;
+            for (int i = 3; i <= n; i++)
+            {
+                int third = first + second;
+                first = second;
+                second = third;
+            }
+            return second;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var solution = new Solution();
+            var result = solution.ClimbStairs(6);
+            Console.WriteLine(result);
+        }
+    }
+}
