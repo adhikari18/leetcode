@@ -1,0 +1,74 @@
+/*
+Given two binary strings, return their sum (also a binary string).
+
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+*/
+/*
+Runtime: 92 ms, faster than 62.09% of C# online submissions for Add Binary.
+Memory Usage: 25 MB, less than 8.33% of C# online submissions for Add Binary.
+*/
+
+using System;
+
+namespace Leetcode
+{
+    public class Solution
+    {
+        public string AddBinary(string a, string b)
+        {
+            var maxLen = a.Length > b.Length ? a.Length : b.Length;
+            a = a.PadLeft(maxLen, '0');
+            b = b.PadLeft(maxLen, '0');
+            var result = string.Empty;
+            var carry = 0;
+            for (int i = a.Length - 1; i >= 0; i--)
+            {
+                var sum = carry + (int)char.GetNumericValue(a[i]) + (int)char.GetNumericValue(b[i]);
+                if (sum <= 1)
+                {
+                    carry = 0;
+                    result = sum + result;
+                }
+                else if (sum == 2)
+                {
+                    carry = 1;
+                    result = 0 + result;
+                }
+                else
+                {
+                    carry = 1;
+                    result = 1 + result;
+                }
+            }
+
+            if (carry == 1)
+            {
+                result = carry + result;
+            }
+
+            return result;
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var a = "11";//"10100000100100110110010000010101111011011001101110111111111101000000101111001110001111100001101";
+            var b = "11";//"110101001011101110001111100110001010100001101011101010000011011011001011101111001100000011011110011";
+            var solution = new Solution();
+            var result = solution.AddBinary(a, b);
+            Console.WriteLine(result);
+        }
+    }
+}
