@@ -1,0 +1,48 @@
+/*
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+
+Input: [2,2,1]
+Output: 1
+Example 2:
+
+Input: [4,1,2,1,2]
+Output: 4
+*/
+/*
+Runtime: 100 ms, faster than 93.09% of C# online submissions for Single Number.
+Memory Usage: 25.2 MB, less than 14.29% of C# online submissions for Single Number.
+*/
+using System;
+
+namespace Leetcode
+{
+    public class Solution
+    {
+        public int SingleNumber(int[] nums)
+        {
+            var result = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                result = result ^ nums[i];
+            }
+
+            return result;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var solution = new Solution();
+            var result = solution.SingleNumber(new int[]{ 2, 2, 1 });
+            Console.WriteLine(result);
+        }
+    }
+}
