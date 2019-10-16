@@ -1,0 +1,65 @@
+/*
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+ 
+
+But the following [1,2,2,null,3,null,3] is not:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+*/
+/*
+Runtime: 88 ms, faster than 98.87% of C# online submissions for Symmetric Tree.
+Memory Usage: 24.2 MB, less than 27.27% of C# online submissions for Symmetric Tree.
+*/
+using System;
+
+namespace Leetcode
+{
+     /* Definition for a binary tree node. */
+  public class TreeNode {
+      public int val;
+      public TreeNode left;
+      public TreeNode right;
+      public TreeNode(int x) { val = x; }
+  }
+
+    public class Solution
+    {
+        public bool IsSymmetric(TreeNode root)
+        {
+            if (root == null) return true;
+            return SymmetryCheck(root, root);
+        }
+
+        public bool SymmetryCheck(TreeNode t1, TreeNode t2)
+        {
+            if (t1 == null && t2 == null) return true;
+            if (t1 == null || t2 == null) return false;
+            return (t1.val == t2.val)
+                   && SymmetryCheck(t1.right, t2.left)
+                   && SymmetryCheck(t1.left, t2.right);
+
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var solution = new Solution();
+            var result = solution.IsSymmetric(null);
+            Console.WriteLine(result);
+        }
+    }
+}
