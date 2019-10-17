@@ -32,6 +32,22 @@ Follow up:
 
 Can you solve it using O(1) (i.e. constant) memory?
 
+//This is from the solution using Slow and Fast pointer, this can solve it in constant memory.
+public boolean hasCycle(ListNode head) {
+    if (head == null || head.next == null) {
+        return false;
+    }
+    ListNode slow = head;
+    ListNode fast = head.next;
+    while (slow != fast) {
+        if (fast == null || fast.next == null) {
+            return false;
+        }
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return true;
+}
 
 */
 /*
