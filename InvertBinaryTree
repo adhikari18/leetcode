@@ -1,0 +1,39 @@
+/*
+Invert a binary tree.
+
+Example:
+
+Input:
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+Output:
+
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+*/
+/*
+Runtime: 96 ms, faster than 73.24% of C# online submissions for Invert Binary Tree.
+Memory Usage: 23 MB, less than 20.00% of C# online submissions for Invert Binary Tree.
+*/
+   public class Solution
+    {
+        public TreeNode InvertTree(TreeNode root)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+            TreeNode right = InvertTree(root.right);
+            TreeNode left = InvertTree(root.left);
+            root.left = right;
+            root.right = left;
+            return root;
+        }
+    }
