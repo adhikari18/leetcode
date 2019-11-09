@@ -14,6 +14,9 @@ Output:
 [5,6]
 */
 /*
+While traversing, use the absolute value of every element as an index and make the value at this index as negative to mark it visited. If something is already marked negative then this is the repeating element. To find missing, traverse the array again and look for a positive value.
+*/
+/*
 Runtime: 308 ms, faster than 96.21% of C# online submissions for Find All Numbers Disappeared in an Array.
 Memory Usage: 42.6 MB, less than 50.00% of C# online submissions for Find All Numbers Disappeared in an Array.
 */
@@ -27,6 +30,10 @@ public class Solution
                 if (nums[index] > 0)
                 {
                     nums[index] = -nums[index];
+                }
+                else
+                {
+                 // These are repeated elements. Add to repeated items list.
                 }
             }
 
