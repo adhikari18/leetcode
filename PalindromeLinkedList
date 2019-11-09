@@ -1,0 +1,84 @@
+/*
+Given a singly linked list, determine if it is a palindrome.
+
+Example 1:
+
+Input: 1->2
+Output: false
+Example 2:
+
+Input: 1->2->2->1
+Output: true
+Follow up:
+Could you do it in O(n) time and O(1) space?
+*/
+
+/*
+Runtime: 100 ms, faster than 87.80% of C# online submissions for Palindrome Linked List.
+Memory Usage: 27.4 MB, less than 30.00% of C# online submissions for Palindrome Linked List.
+*/
+
+    public class Solution
+    {
+        public bool IsPalindrome(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return true;
+            
+            var secondHead = GetSecondHead(head);
+
+            var p1 = Reverse(secondHead, out var p2);
+
+            secondHead.next = null;
+
+            return CompareSublists(head, p2, p1);
+        }
+
+        private ListNode GetSecondHead(ListNode head)
+        {
+            ListNode fast = head;
+            ListNode slow = head;
+
+            while (fast.next != null && fast.next.next != null)
+            {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+
+            ListNode secondHead = slow.next;
+            return secondHead;
+        }
+
+        private static ListNode Reverse(ListNode secondHead, out ListNode p2)
+        {
+            ListNode p1 = secondHead;
+            p2 = p1.next;
+
+            while (p1 != null && p2 != null)
+            {
+                ListNode temp = p2.next;
+                p2.next = p1;
+                p1 = p2;
+                p2 = temp;
+            }
+
+            return p1;
+        }
+
+        private bool CompareSublists(ListNode head, ListNode p2, ListNode p1)
+        {
+            ListNode p = p2 == null ? p1 : p2;
+            ListNode q = head;
+            while (p != null)
+            {
+                if (p.val != q.val)
+                    return false;
+
+                p = p.next;
+                q = q.next;
+            }
+
+            return true;
+        }
+    }
+
