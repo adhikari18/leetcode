@@ -1,0 +1,64 @@
+/*
+Given a string, find the length of the longest substring without repeating characters.
+
+Example 1:
+
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+Example 2:
+
+Input: "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3. 
+             Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+*/
+/*
+Runtime: 92 ms, faster than 60.03% of C# online submissions for Longest Substring Without Repeating Characters.
+Memory Usage: 25.1 MB, less than 8.70% of C# online submissions for Longest Substring Without Repeating Characters.
+*/
+
+ public class Solution
+    {
+        public int LengthOfLongestSubstring(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return 0;
+            }
+
+            var set = new HashSet<char>();
+            int result = 1;
+            int i = 0;
+            for (int j = 0; j < s.Length; j++)
+            {
+                char c = s[j];
+                if (!set.Contains(c))
+                {
+                    set.Add(c);
+                    result = Math.Max(result, set.Count);
+                }
+                else
+                {
+                    while (i < j)
+                    {
+                        if (s[i] == c)
+                        {
+                            i++;
+                            break;
+                        }
+
+                        set.Remove(s[i]);
+                        i++;
+                    }
+                }
+            }
+
+            return result;
+        }
+    }
