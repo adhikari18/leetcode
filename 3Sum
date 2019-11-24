@@ -1,0 +1,54 @@
+/*
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+
+The solution set must not contain duplicate triplets.
+
+Example:
+
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+*/
+/*
+Runtime: 300 ms, faster than 99.36% of C# online submissions for 3Sum.
+Memory Usage: 35 MB, less than 15.00% of C# online submissions for 3Sum.
+*/
+public class Solution {
+    public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            var result = new List<IList<int>>();
+            Array.Sort(nums);
+            for (var i = 0; i < nums.Length; i++)
+            {
+                if (i != 0 && nums[i] == nums[i - 1]) continue;
+                var j = i + 1;
+                var k = nums.Length - 1;
+                while (j < k)
+                {
+                    var sum = nums[i] + nums[j] + nums[k];
+                    if (sum == 0)
+                    {
+                        result.Add(new List<int> { nums[i], nums[j], nums[k] });
+                        ++j;
+                        while (j < k && nums[j] == nums[j - 1]) ++j;
+                    }
+                    else if (sum > 0)
+                    {
+                        k--;
+                    }
+                    else
+                    {
+                        j++;
+                    }
+                }
+            }
+
+            return result;
+        }
+}
