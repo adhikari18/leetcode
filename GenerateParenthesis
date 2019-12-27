@@ -1,0 +1,62 @@
+/*
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+For example, given n = 3, a solution set is:
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+*/
+/*
+Runtime: 240 ms, faster than 72.07% of C# online submissions for Generate Parentheses.
+Memory Usage: 31.8 MB, less than 12.50% of C# online submissions for Generate Parentheses.
+*/
+
+using System;
+using System.Collections.Generic;
+
+namespace LeetCode
+{
+    public class Solution
+    {
+        private void Helper(List<string> res, string present, int left, int right, int n)
+        {
+            if (left == n && right == n) {
+                res.Add(present);
+                return;
+            }
+            if (left < n)
+            {
+                Helper(res, present + "(", left + 1, right, n);
+            }
+            if (left > right)
+            {
+                Helper(res, present + ")", left, right + 1, n);
+            }
+        }
+
+        public List<string> GenerateParenthesis(int n)
+        {
+            List<string> res = new List<string>();
+            if (n == 0)
+            {
+                return res;
+            }
+            Helper(res, "", 0, 0, n);
+            return res;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var solution = new Solution();
+            var result = solution.GenerateParenthesis(3);
+        }
+    }
+}
