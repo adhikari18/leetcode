@@ -1,0 +1,64 @@
+/*
+https://leetcode.com/problems/longest-increasing-subsequence
+*/
+/*
+https://leetcode.com/problems/longest-increasing-subsequence/solution/
+Approach 3: Dynamic Programming
+Algorithm
+
+This method relies on the fact that the longest increasing subsequence possible upto the i^{th}i 
+th
+  index in a given array is independent of the elements coming later on in the array. Thus, if we know the length of the LIS upto i^{th}i 
+th
+  index, we can figure out the length of the LIS possible by including the (i+1)^{th}(i+1) 
+th
+  element based on the elements with indices jj such that 0 \leq j \leq (i + 1)0≤j≤(i+1).
+
+We make use of a dpdp array to store the required data. dp[i]dp[i] represents the length of the longest increasing subsequence possible considering the array elements upto the i^{th}i 
+th
+  index only ,by necessarily including the i^{th}i 
+th
+  element. In order to find out dp[i]dp[i], we need to try to append the current element(nums[i]nums[i]) in every possible increasing subsequences upto the (i-1)^{th}(i−1) 
+th
+  index(including the (i-1)^{th}(i−1) 
+th
+  index), such that the new sequence formed by adding the current element is also an increasing subsequence. Thus, we can easily determine dp[i]dp[i] using:
+
+dp[i] = \text{max}(dp[j]) + 1, \forall 0\leq j < idp[i]=max(dp[j])+1,∀0≤j<i
+
+At the end, the maximum out of all the dp[i]dp[i]'s to determine the final result.
+
+LIS_{length}= \text{max}(dp[i]), \forall 0\leq i < nLIS 
+length
+​	
+ =max(dp[i]),∀0≤i<n
+*/
+
+
+  public class Solution
+  {
+      public int LengthOfLIS(int[] nums)
+      {
+          if (nums.Length == 0)
+          {
+              return 0;
+          }
+          int[] dp = new int[nums.Length];
+          dp[0] = 1;
+          int lis = 1;
+          for (int i = 1; i < nums.Length; i++)
+          {
+              int maxValue = 0;
+              for (int j = 0; j < i; j++)
+              {
+                  if (nums[i] > nums[j])
+                  {
+                      maxValue = Math.Max(maxValue, dp[j]);
+                  }
+              }
+              dp[i] = maxValue + 1;
+              lis = Math.Max(lis, dp[i]);
+          }
+          return lis;
+      }
+  }
