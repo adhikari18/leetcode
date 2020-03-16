@@ -1,0 +1,50 @@
+/*
+https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:
+
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)
+Example:
+
+Input: [1,2,3,0,2]
+Output: 3 
+Explanation: transactions = [buy, sell, cooldown, buy, sell]
+*/
+/*
+buy [i] = max (rest [i- 1 ]-price, buy [i- 1 ])
+sell [i] = max (buy [i- 1 ] + price, sell [i- 1 ])
+rest [i] = max (sell [i- 1 ], buy [i- 1 ], rest [i- 1 ])
+
+The above recursion formula shows that there is a freezing period before buying, and that the previous stock must be sold before buying. A little trick is how to ensure that the situation of [buy, rest, buy] does not occur, this is because buy [i] <= rest [i], that is, rest [i] = max (sell [i-1], rest [ i-1]), which guarantees that [buy, rest, buy] will not appear.
+
+In addition, due to the freezing period, we can get rest [i] = sell [i-1]. In this way, we can reduce the above three recursive formulas to two:
+
+buy [i] = max (sell [i- 2 ]-price, buy [i- 1 ])
+sell [i] = max (buy [i- 1 ] + price, sell [i- 1 ])
+ 
+
+We can also do further optimization. Since i only depends on i-1 and i-2, we can complete the algorithm in the space complexity of O (1). See the code as follows:
+*/
+/*
+*/
+
+public class Solution
+{
+    public int MaxProfit(int[] prices)
+    {
+        var len = prices.Length;
+        if (len == 0) return 0;
+        var stock = int.MinValue;
+        var money = 0;
+        var prev_money = 0;
+        for(var i = 0; i < len; i++)
+        {
+            stock = Math.Max(stock, prev_money - prices[i]);
+            prev_money = money;
+            money = Math.Max(stock + prices[i], money);
+        }
+        return money;
+    }
+}
