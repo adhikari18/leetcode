@@ -1,0 +1,44 @@
+/*
+https://leetcode.com/problems/pascals-triangle/
+Input: 5
+Output:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+
+*/
+
+
+    public class Solution
+    {
+        public IList<IList<int>> Generate(int numRows)
+        {
+            var result = new List<IList<int>>();
+            if (numRows <= 0)
+                return result;
+
+            var pre = new List<int> { 1 };
+            result.Add(pre);
+
+            for (int i = 2; i <= numRows; i++)
+            {
+                var cur = new List<int>();
+
+                cur.Add(1); //first
+                for (int j = 0; j < pre.Count - 1; j++)
+                {
+                    cur.Add(pre[j] + pre[j + 1]); //middle
+                }
+                cur.Add(1);//last
+
+                result.Add(cur);
+                pre = cur;
+            }
+
+            return result;
+        }
+    }
