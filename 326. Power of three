@@ -1,0 +1,25 @@
+
+
+Approach 3: Mathematics
+We can use mathematics as follows
+
+n = 3^i \\ i = \log_3(n) \\ i = \frac{\log_b(n)}{\log_b(3)}n=3 
+i
+ 
+i=log 
+3
+​	
+ (n)
+i= 
+log 
+b
+​	
+ (3)
+log 
+b
+​	
+ (n)
+​	
+ 
+
+n is a power of three if and only if i is an integer. In Java, we check if a number is an integer by taking the decimal part (using % 1) and checking if it is 0.
