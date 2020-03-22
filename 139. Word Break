@@ -27,7 +27,7 @@ Output: false
 
 /*
 https://media.geeksforgeeks.org/wp-content/cdn-uploads/wordBreak1.png
-
+https://www.youtube.com/watch?v=hLQYQ4zj0qg
  Two loops take O(n²) time if we assume checking existence in wordDict only take O(1) time. We need O(n) extra space for the dp list.
 */
 
