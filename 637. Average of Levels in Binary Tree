@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public IList<double> AverageOfLevels(TreeNode root) {
+        var result = new List<double>();
+        if(root == null) return result;
+        
+        var queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        
+        while(queue.Count > 0){
+            var size = queue.Count;
+            var sum = 0.0;
+            for(var i = 0; i < size; i++){
+                var current = queue.Dequeue();
+                sum += current.val;
+                if(current.left != null) queue.Enqueue(current.left);
+                if(current.right != null) queue.Enqueue(current.right);
+            }
+            result.Add(sum/size);
+        }
+        return result;
+    }
+}
+
+
+//https://leetcode.com/problems/average-of-levels-in-binary-tree
+//637. Average of Levels in Binary Tree
