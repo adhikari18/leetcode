@@ -1,0 +1,30 @@
+//111. Minimum Depth of Binary Tree
+    /**
+       * Definition for a binary tree node.
+       * public class TreeNode {
+       *     public int val;
+       *     public TreeNode left;
+       *     public TreeNode right;
+       *     public TreeNode(int x) { val = x; }
+       * }
+       */
+
+    public class Solution
+    {
+        public int MinDepth(TreeNode root)
+        {
+            return root == null ? 0 : Helper(root);
+        }
+        private int Helper(TreeNode root)
+        {
+            if (root == null) return int.MaxValue;
+            if (root.left == null && root.right == null)
+                return 1;
+            var leftDepth = Helper(root.left);
+            var rightDepth = Helper(root.right);
+            return Math.Min(leftDepth, rightDepth) + 1;
+        }
+    }
+    
+    
+ //https://leetcode.com/problems/minimum-depth-of-binary-tree
