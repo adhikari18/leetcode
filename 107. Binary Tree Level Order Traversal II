@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public IList<IList<int>> LevelOrderBottom(TreeNode root) {
+        var result = new List<IList<int>>();
+        var reversedList = new List<IList<int>>();
+        if(root == null) return result;
+        
+        var queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        
+        while(queue.Count > 0){
+            var size = queue.Count;
+            var list = new List<int>();
+            for(var i = 0; i < size; i++)
+            {
+                var current = queue.Dequeue();
+                list.Add(current.val);
+                if(current.left != null) queue.Enqueue(current.left);
+                if(current.right != null) queue.Enqueue(current.right);                
+            }
+            
+            reversedList.Add(list);
+        }
+        for(var i = reversedList.Count - 1; i >= 0; i--){
+            result.Add(reversedList[i]);
+        }
+        return result;
+    }
+}
+
+//107. Binary Tree Level Order Traversal II
+//https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+//Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
