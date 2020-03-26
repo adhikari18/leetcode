@@ -1,0 +1,38 @@
+// 106. Construct Binary Tree from Inorder and Postorder Traversal
+//https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+
+    public class Solution
+    {
+        public TreeNode BuildTree(int[] inorder, int[] postorder)
+        {
+            int inStart = 0;
+            int inEnd = inorder.Length - 1;
+            int postStart = 0;
+            int postEnd = postorder.Length - 1;
+            return Helper(inorder, inStart, inEnd, postorder, postStart, postEnd);
+        }
+
+        public TreeNode Helper(int[] inorder, int inStart, int inEnd, int[] postorder, int postStart, int postEnd)
+        {
+            if (inStart > inEnd || postStart > postEnd)
+                return null;
+
+            int rootValue = postorder[postEnd];
+            TreeNode root = new TreeNode(rootValue);
+
+            int inIndex = 0;
+            for (int i = 0; i < inorder.Length; i++)
+            {
+                if (inorder[i] == rootValue)
+                {
+                    inIndex = i;
+                    break;
+                }
+            }
+
+            root.left = Helper(inorder, inStart, inIndex - 1, postorder, postStart, postStart + (inIndex - inStart) - 1);
+            root.right = Helper(inorder, inIndex + 1, inEnd, postorder, postStart + (inIndex - inStart), postEnd - 1);
+
+            return root;
+        }
+    }
