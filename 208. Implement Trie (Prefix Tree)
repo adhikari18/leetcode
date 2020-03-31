@@ -1,0 +1,72 @@
+//208. Implement Trie (Prefix Tree)
+//https://leetcode.com/problems/implement-trie-prefix-tree
+
+public class TrieNode{
+    public TrieNode[] arr;
+    public bool isEnd;
+    public TrieNode(){
+        this.arr = new TrieNode[26];
+    }
+}
+
+public class Trie {
+    private TrieNode root;
+
+    /** Initialize your data structure here. */
+    public Trie() {
+        root = new TrieNode();
+    }
+    
+    /** Inserts a word into the trie. */
+    public void Insert(string word) {
+        TrieNode node= root;
+        for(var i = 0; i < word.Length; i++){
+            var c = word[i];
+            var index = c - 'a';
+            if(node.arr[index] == null){
+                TrieNode temp = new TrieNode();
+                node.arr[index] = temp;
+                node = temp;
+            } else {
+                node = node.arr[index];
+            }
+        }
+        node.isEnd = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public bool Search(string word) {
+        TrieNode node = searchNode(word);
+        return node != null && node.isEnd;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public bool StartsWith(string prefix) {
+        var node = searchNode(prefix);
+        return node != null;
+        
+    }
+    
+    private TrieNode searchNode(string s){
+        TrieNode node = root;
+        for(var i = 0; i < s.Length; i++){
+            var c = s[i];
+            var index = c - 'a';
+            if(node.arr[index] == null){
+                return null;
+            }
+            node = node.arr[index];
+        }
+        if(node == root)
+            return null;
+        return node;
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.Insert(word);
+ * bool param_2 = obj.Search(word);
+ * bool param_3 = obj.StartsWith(prefix);
+ */
