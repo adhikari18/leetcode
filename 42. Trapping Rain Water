@@ -1,0 +1,57 @@
+//42. Trapping Rain Water
+//https://leetcode.com/problems/trapping-rain-water/
+
+
+
+public class Solution {
+    public int Trap(int[] height) {
+        int left = 0;
+        int right = height.Length - 1;
+        int answer = 0;
+        int leftMax = 0;
+        int rightMax = 0;
+        while(left < right){
+            if(height[left] < height[right])
+            {                
+                if(height[left] >= leftMax)
+                {
+                    leftMax = height[left];                    
+                } 
+                else 
+                {
+                    answer += leftMax - height[left];
+                }                
+                ++left;
+            }
+            else
+            {
+                if(height[right] >= rightMax)
+                {
+                 rightMax = height[right];   
+                } 
+                else 
+                {
+                    answer += rightMax - height[right];
+                }
+                
+                --right;
+            }            
+        }
+        return answer;
+    }
+}
+
+/*
+Algorithm
+
+Initialize \text{left}left pointer to 0 and \text{right}right pointer to size-1
+While \text{left}< \text{right}left<right, do:
+If \text{height[left]}height[left] is smaller than \text{height[right]}height[right]
+If \text{height[left]} \geq \text{left\_max}height[left]≥left_max, update \text{left\_max}left_max
+Else add \text{left\_max}-\text{height[left]}left_max−height[left] to \text{ans}ans
+Add 1 to \text{left}left.
+Else
+If \text{height[right]} \geq \text{right\_max}height[right]≥right_max, update \text{right\_max}right_max
+Else add \text{right\_max}-\text{height[right]}right_max−height[right] to \text{ans}ans
+Subtract 1 from \text{right}right.
+*/
