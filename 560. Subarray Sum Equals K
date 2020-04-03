@@ -1,0 +1,26 @@
+//560. Subarray Sum Equals K
+//https://leetcode.com/problems/subarray-sum-equals-k/
+//Similar to 2 sum logic here for cumulative sum
+
+
+public class Solution {
+    public int SubarraySum(int[] nums, int k) {
+        var sum = 0;
+        var dict = new Dictionary<int, int>();
+        dict.Add(0,1);
+        var result = 0;
+        for(var i = 0; i < nums.Length; i++){
+            sum += nums[i];
+            if(dict.ContainsKey(sum-k)){
+                result += dict[sum-k];
+            }
+            if(dict.ContainsKey(sum)){
+                dict[sum] = dict[sum] + 1;
+            } else {
+                dict.Add(sum, 1);
+            }
+        }        
+        return result;
+            
+    }
+}
