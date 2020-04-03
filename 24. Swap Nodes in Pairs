@@ -35,3 +35,25 @@ public class Solution {
         return dummy.next;        
     }
 }
+
+
+
+// Recursive solution
+public class Solution {
+    public ListNode SwapPairs(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        
+        var prev = head;
+        var p1 = head.next;
+        var p2 = head.next.next;
+        
+        head = p1;
+        head.next = prev;
+        head.next.next = p2;
+        
+        head.next.next = SwapPairs(head.next.next);
+        return head;
+    }
+        
+}
