@@ -1,0 +1,35 @@
+//692. Top K Frequent Words
+//https://leetcode.com/problems/top-k-frequent-words/
+
+public class Solution {
+    public IList<string> TopKFrequent(string[] words, int k) {
+        var dict = new Dictionary<string, int>();
+        
+        for(var i = 0; i < words.Length; i++){
+            if(dict.ContainsKey(words[i])){
+                dict[words[i]] += 1;
+            } else 
+                dict[words[i]] = 1;
+        }        
+        
+        var bucket = new List<string>[words.Length + 1];
+        for(var j = 0; j < bucket.Length; j++){
+            bucket[j] = new List<string>();
+        }
+        
+        foreach(var key in dict.Keys){
+            var freq = dict[key];
+            bucket[freq].Add(key);
+        }
+        
+        var result = new List<string>();
+        
+        for(var l = bucket.Length -1; l >= 0; l--){
+            var subList = bucket[l];
+            subList.Sort();
+            result.AddRange(subList);
+             if(result.Count() >= k) break;
+        }
+        return result.Take(k).ToList();        
+    }
+}
