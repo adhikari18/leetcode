@@ -1,0 +1,37 @@
+//973. K Closest Points to Origin
+//https://leetcode.com/problems/k-closest-points-to-origin/
+
+
+    public class Solution
+    {
+        public int[][] KClosest(int[][] points, int K)
+        {
+            var distances = new List<int>();
+
+            for (var i = 0; i < points.Length; i++)
+            {
+                distances.Add(Distance(points[i]));
+            }
+
+            distances.Sort();
+            var distanceK = distances[K - 1];
+            var result = new int[K][];
+
+            var index = 0;
+            for (var i = 0; i < points.Length; i++)
+            {
+                var distance = Distance(points[i]);
+                if (distance <= distanceK)
+                {
+                    result[index++] = points[i];
+                }
+            }
+
+            return result;
+        }
+
+        private int Distance(int[] point)
+        {
+            return point[0] * point[0] + point[1] * point[1];
+        }
+    }
