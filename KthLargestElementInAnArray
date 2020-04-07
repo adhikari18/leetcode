@@ -1,15 +1,6 @@
 /*
 https://leetcode.com/problems/kth-largest-element-in-an-array
 Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
-
-Example 1:
-
-Input: [3,2,1,5,6,4] and k = 2
-Output: 5
-Example 2:
-
-Input: [3,2,3,1,2,4,5,5,6] and k = 4
-Output: 4
 */
 /*
 Simple solution with nlog(n) runtime
@@ -26,3 +17,76 @@ public class Solution
 /*
 Can be done better with PriorityQueue Min Heap, keep adding items to heap and remove if the heap size exceeds K. The first element on the min heap will be Kth element.
 */
+
+
+//Better solution with Quick Select, average of O(n), worst case O(n^2), quick select is used to find the kth smallest element
+//kth largest is equivalent to (numlength - k) smallest
+    public class Solution
+    {
+        public int FindKthLargest(int[] nums, int k)
+        {
+            return QuickSelect(nums, 0, nums.Length - 1, nums.Length-k);
+        }
+        
+        
+        public int Rand(int min, int max)
+        {
+            return new Random().Next(max - min + 1) + min;
+        }
+
+        public  void Swap(int[] A, int i, int j)
+        {
+            int temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
+        }
+
+        // Partition using Lomuto partition scheme
+        public int Partition(int[] A, int left, int right, int pivotIndex)
+        {
+            int pivot = A[pivotIndex];
+
+            Swap(A, pivotIndex, right); // Move pivot to end
+
+            int pIndex = left; // elements less than pivot will be pushed to the left of pIndex and so on
+
+            // each time we finds an element less than or equal to pivot, pIndex is incremented and that element would be placed before the pivot.
+            for (var i = left; i < right; i++)
+            {
+                if (A[i] <= pivot)
+                {
+                    Swap(A, i, pIndex);
+                    pIndex++;
+                }
+            }
+
+            Swap(A, pIndex, right);
+
+            return pIndex;
+        }
+
+        public int QuickSelect(int[] A, int left, int right, int k)
+        {
+            if (left == right)
+            {
+                return A[left];
+            }
+
+            int pivotIndex = Rand(left, right);
+
+            pivotIndex = Partition(A, left, right, pivotIndex);
+
+            if (k == pivotIndex)
+            {
+                return A[k];
+            }
+            else if (k < pivotIndex)
+            {
+                return QuickSelect(A, left, pivotIndex - 1, k);
+            }
+            else
+            {
+                return QuickSelect(A, pivotIndex + 1, right, k);
+            }
+        }
+    }
