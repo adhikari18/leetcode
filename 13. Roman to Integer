@@ -1,0 +1,33 @@
+//13. Roman to Integer
+//https://leetcode.com/problems/roman-to-integer/
+public class Solution
+{
+    public int RomanToInt(string s)
+    {
+         var romanValues = new Dictionary<char, int>();
+            romanValues.Add('I', 1);
+            romanValues.Add('V', 5);
+            romanValues.Add('X', 10);
+            romanValues.Add('L', 50);
+            romanValues.Add('C', 100);
+            romanValues.Add('D', 500);
+            romanValues.Add('M', 1000);
+        var result = 0;
+        for (var index = 0; index < s.Length; index++)
+        {
+            var value = romanValues[s[index]];
+            if (index < s.Length - 1)
+            {
+                var value2 = romanValues[s[index + 1]];
+                if (value2 > value)
+                {
+                    result += value2 - value;
+                    index++;
+                    continue;
+                }
+            }
+            result += value;
+        }
+        return result;
+    }
+}
