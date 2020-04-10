@@ -1,61 +1,57 @@
 //155. Min Stack
 //https://leetcode.com/problems/min-stack/
 
+public class MinStackElement
+{
+    public int value;
+    public int min;
+    public MinStackElement next;
 
-       public class MinStackElement
+    public MinStackElement(int value, int min)
     {
-        public int value;
-        public int min;
-        public MinStackElement next;
+        this.value = value;
+        this.min = min;
+    }
+}
 
-        public MinStackElement(int value, int min)
+public class MinStack
+{
+    public MinStackElement _top;
+
+    /** initialize your data structure here. */
+    public MinStack() { }
+
+    public void Push(int x)
+    {
+        if (_top == null)
         {
-            this.value = value;
-            this.min = min;
+            _top = new MinStackElement(x, x);
+        }
+        else
+        {
+            MinStackElement e = new MinStackElement(x, Math.Min(x, _top.min));
+            e.next = _top;
+            _top = e;
         }
     }
 
-    public class MinStack
+    public void Pop()
     {
-        public MinStackElement _top;
-
-        /** initialize your data structure here. */
-        public MinStack() { }
-
-        public void Push(int x)
-        {
-            if (_top == null)
-            {
-                _top = new MinStackElement(x, x);
-            }
-            else
-            {
-                MinStackElement e = new MinStackElement(x, Math.Min(x, _top.min));
-                e.next = _top;
-                _top = e;
-            }
-        }
-
-        public void Pop()
-        {
-            if (_top == null)
-                return;
-            MinStackElement temp = _top.next;
-            _top.next = null;
-            _top = temp;
-
-        }
-
-        public int Top()
-        {
-            return _top == null ? -1 : _top.value;
-        }
-
-        public int GetMin()
-        {
-            return _top == null ? -1 : _top.min;
-        }
+        if (_top == null)
+            return;
+        _top = _top.next;
     }
+
+    public int Top()
+    {
+        return _top == null ? -1 : _top.value;
+    }
+
+    public int GetMin()
+    {
+        return _top == null ? -1 : _top.min;
+    }
+}
 
 /**
  * Your MinStack object will be instantiated and called as such:
