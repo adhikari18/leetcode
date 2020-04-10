@@ -1,0 +1,17 @@
+//122. Best Time to Buy and Sell Stock II
+//https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+//multiple transactions allowed but you must sell the stock before you buy again
+
+public class Solution {
+    public int MaxProfit(int[] prices) {
+        var maxProfit = 0;        
+        for(var i = 1; i < prices.Length; i++)
+        {
+            if(prices[i] > prices[i-1])
+            {
+                maxProfit += prices[i] - prices[i-1];
+            }
+        }
+        return maxProfit;
+    }
+}
