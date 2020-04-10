@@ -23,16 +23,11 @@ public class MinStack
 
     public void Push(int x)
     {
-        if (_top == null)
-        {
-            _top = new MinStackElement(x, x);
-        }
-        else
-        {
-            MinStackElement e = new MinStackElement(x, Math.Min(x, _top.min));
-            e.next = _top;
-            _top = e;
-        }
+        var minVal = _top == null ? x : Math.Min(x, _top.min);
+        
+        MinStackElement e = new MinStackElement(x, minVal);
+        e.next = _top;
+        _top = e;
     }
 
     public void Pop()
