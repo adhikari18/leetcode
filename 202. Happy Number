@@ -1,0 +1,25 @@
+//202. Happy Number
+//https://leetcode.com/problems/happy-number/
+
+public class Solution {
+    public bool IsHappy(int n) {
+        var seen = new HashSet<int>();
+        
+        while(n != 1)
+        {
+            var current = n;
+            var sum = 0;
+            while(current != 0){
+                sum += (current%10) * (current%10);
+                current /= 10;
+            }
+            
+            if(seen.Contains(sum)){
+                return false;
+            }
+            seen.Add(sum);
+            n = sum;
+        }
+        return true;
+    }
+}
