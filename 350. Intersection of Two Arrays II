@@ -1,0 +1,28 @@
+//350. Intersection of Two Arrays II
+//https://leetcode.com/problems/intersection-of-two-arrays-ii/
+
+public class Solution {
+    public int[] Intersect(int[] nums1, int[] nums2) {
+        if(nums1.Length > nums2.Length)
+          Intersect(nums2, nums1);
+        
+        var map = new Dictionary<int, int>();
+        foreach(var num in nums1)
+        {
+            if(map.ContainsKey(num)){
+                map[num] = map[num] + 1;
+            }
+            else map.Add(num, 1);
+        }
+        
+        var list = new List<int>();
+        foreach(var num in nums2)
+        {
+            if(map.ContainsKey(num) && map[num] > 0){
+                list.Add(num);
+                map[num] = map[num] - 1;
+            }
+        }
+        return list.ToArray();
+    }
+}
