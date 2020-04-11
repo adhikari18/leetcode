@@ -1,44 +1,31 @@
 //17. Letter Combinations of a Phone Number
 //https://leetcode.com/problems/letter-combinations-of-a-phone-number/
 
-public class Solution
+public class Solution 
 {
-    private readonly Dictionary<string, string> _map = new Dictionary<string, string>
-            {
-                {"2", "abc"},
-                {"3", "def"},
-                {"4", "ghi"},
-                {"5", "jkl"},
-                {"6", "mno"},
-                {"7", "pqrs"},
-                {"8", "tuv"},
-                {"9", "wxyz"},
-            };
-
-    private readonly List<string> _output = new List<string>();
-
-    public void Helper(string combination, string nextDigits)
+    public IList<string> LetterCombinations(string digits)
     {
-        if (nextDigits.Length == 0)
-        {
-            _output.Add(combination);
-        }
-        else
-        {
-            var digit = nextDigits.Substring(0, 1);
-            var letters = _map.GetValueOrDefault(digit);
-            for (var i = 0; i < letters.Length; i++)
-            {
-                var letter = _map.GetValueOrDefault(digit).Substring(i, 1);
-                Helper(combination + letter, nextDigits.Substring(1));
-            }
-        }
+        var result = new List<string>();
+        if(string.IsNullOrEmpty(digits))
+            return result;
+        
+        var mapping = new string[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        Helper(result, digits, "", 0, mapping);
+        return result;
     }
-
-    public List<string> LetterCombinations(string digits)
+    
+    private void Helper(List<string> result, string digits, string current, int index, string[] mapping)
     {
-        if (digits.Length != 0)
-            Helper("", digits);
-        return _output;
+        if(index == digits.Length)
+        {
+            result.Add(current);
+            return;
+        }
+        
+        var letters = mapping[digits[index] - '0'];
+        foreach(var c in letters)
+        {
+            Helper(result, digits, current + c, index + 1, mapping);
+        }        
     }
 }
