@@ -1,0 +1,26 @@
+//3. Longest Substring Without Repeating Characters
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+public class Solution {
+    public int LengthOfLongestSubstring(string s) {
+        var ans = 0; 
+        var i = 0;
+        var j = 0;
+        var set = new HashSet<char>();
+        while(i < s.Length && j < s.Length)
+        {
+            if(set.Contains(s[j]))
+            {
+                set.Remove(s[i]);
+                i++;
+            }
+            else 
+            {
+                set.Add(s[j]);
+                j++;
+                ans = Math.Max(ans, j - i);
+            }            
+        }
+        return ans;
+    }
+}
