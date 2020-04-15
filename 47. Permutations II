@@ -1,0 +1,27 @@
+//47. Permutations II
+//https://leetcode.com/problems/permutations-ii/
+
+public class Solution {
+    public IList<IList<int>> PermuteUnique(int[] nums) {
+        Array.Sort(nums);
+        var result = new List<IList<int>>();        
+        Backtrack(result, nums, new List<int>(), new bool[nums.Length]);        
+        return result;
+    }
+    
+    private void Backtrack(IList<IList<int>> result, int[] nums, List<int> current, bool[] used)
+    {
+        if(current.Count == nums.Length)
+            result.Add(new List<int>(current));
+        
+        for(var i = 0; i < nums.Length; i++)
+        {
+            if(used[i] || i > 0 && nums[i] == nums[i-1] && !used[i-1]) continue;
+            current.Add(nums[i]);
+            used[i] = true;
+            Backtrack(result, nums, current, used);
+            used[i] = false;
+            current.RemoveAt(current.Count - 1);
+        }        
+    }
+}
