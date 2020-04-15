@@ -21,3 +21,10 @@ public class Solution {
         }
     }
 }
+
+
+/*
+Time complexity: \mathcal{O}(N \times 2^N)O(N×2N) to generate all subsets and then copy them into output list.
+
+Space complexity: \mathcal{O}(N \times 2^N)O(N×2N) to keep all the subsets of length NN, since each of NN elements could be present or absent.
+ */
