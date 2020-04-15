@@ -1,0 +1,31 @@
+//https://leetcode.com/problems/combination-sum-ii
+//40. Combination Sum II
+//Each number in candidates may only be used once in the combination., The solution set must not contain duplicate combinations.
+
+class Solution
+{
+    public List<IList<int>> CombinationSum2(int[] candidates, int target)
+    {
+        List<IList<int>> result = new List<IList<int>>();
+        Array.Sort(candidates);
+        Backtrack(result, candidates, new List<int>(), target, 0);
+        return result;
+    }
+
+    private void Backtrack(IList<IList<int>> result, int[] candidates, List<int> current, int target, int index)
+    {
+        if(target < 0) return;
+        if(target == 0)
+         result.Add(new List<int>(current));
+        else
+        {
+            for(var i = index; i < candidates.Length; i++)
+            {
+                if(i > index && candidates[i] == candidates[i-1]) continue;
+                current.Add(candidates[i]);
+                Backtrack(result, candidates, current, target - candidates[i], i + 1);
+                current.RemoveAt(current.Count - 1);                    
+            }                
+        }
+    }
+}
