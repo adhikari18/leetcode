@@ -1,0 +1,37 @@
+//131. Palindrome Partitioning
+//https://leetcode.com/problems/palindrome-partitioning/
+
+public class Solution {
+    public IList<IList<string>> Partition(string s) {
+        var result = new List<IList<string>>();
+        Backtrack(result, s, new List<string>(), 0);
+        return result;
+    }
+    
+    private void Backtrack(IList<IList<string>> result, string s, List<string> current, int start)
+    {
+        if(start == s.Length)
+            result.Add(new List<string>(current));
+        else
+        {
+            for(var i = start; i < s.Length; i++)
+            {
+                if(IsPalindrome(s, start, i))
+                {
+                    current.Add(s.Substring(start, i - start + 1));
+                    Backtrack(result, s, current, i + 1);
+                    current.RemoveAt(current.Count - 1);
+                }
+            }
+        }
+    }
+    
+    private bool IsPalindrome(string s, int start, int end)
+    {
+        while(start < end){
+            if(s[start++] != s[end--])
+                return false;
+        }
+        return true;
+    }
+}
