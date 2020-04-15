@@ -1,0 +1,31 @@
+//49. Group Anagrams
+//https://leetcode.com/problems/group-anagrams/
+   
+   public class Solution
+    {
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            var result = new List<IList<string>>();
+            var dict = new Dictionary<string, List<string>>();
+            for(var i = 0; i < strs.Length; i++)
+            {
+                var str = strs[i];
+                str = string.Concat(str.OrderBy(c => c));
+                if (dict.ContainsKey(str))
+                {
+                    var list = dict[str];
+                    list.Add(strs[i]);
+                    dict[str] =  list;
+                } 
+                else
+                {
+                    dict.Add(str, new List<string> { strs[i] });
+                }
+            }
+            foreach(var key in dict.Keys)
+            {
+                result.Add(dict[key]);
+            }
+            return result;
+        }
+    }
