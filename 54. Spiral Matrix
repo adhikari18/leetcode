@@ -2,45 +2,43 @@
 54. Spiral Matrix
 https://leetcode.com/problems/spiral-matrix/*/
 
-    public class Solution
-    {
-        public IList<int> SpiralOrder(int[][] matrix)
-        {
-            var result = new List<int>();
-            if (matrix == null || matrix.Length == 0)
-                return result;
-
-            var x = 0; var y = 0;
-            var xMax = matrix.Length;
-            var yMax = matrix[0].Length;
-            while (x < xMax && y < yMax)
-            {
-                // first row
-                for (var i = y; i < yMax; i++) 
-                   result.Add(matrix[x][i]);
-                x++;
-
-                // last column
-                for (var i = x; i < xMax; i++)
-                    result.Add(matrix[i][yMax - 1]);
-                yMax--;
-
-                // last row
-                if (x < xMax)
-                {
-                    for (var i = yMax - 1; i >= y; i--)
-                        result.Add(matrix[xMax - 1][i]);
-                    xMax--;
-                }
-
-                // first column
-                if (y < yMax)
-                {
-                    for (var i = xMax - 1; i >= x; i--)
-                        result.Add(matrix[i][y]);
-                    y++;
-                }
-            }
+public class Solution {
+    public IList<int> SpiralOrder(int[][] matrix) {
+        var result = new List<int>();
+        if(matrix.Length == 0)
             return result;
-        }
+        var xMax = matrix.Length - 1;
+        var yMax = matrix[0].Length - 1;
+        var x = 0; var y = 0;
+        
+        while(x <= xMax && y <= yMax)
+        {
+            // first row
+            for(var i = y; i <= yMax; i++)
+                result.Add(matrix[x][i]);
+            x++;
+            
+            // last column
+            for(var i = x; i <= xMax; i++)
+                result.Add(matrix[i][yMax]);
+            yMax--;
+            
+            // last row
+            if(x <= xMax)
+            {
+                for(var i = yMax; i >= y; i--)
+                    result.Add(matrix[xMax][i]);
+                xMax--;
+            }
+            
+            // first column
+            if(y <= yMax)
+            {
+                for(var i = xMax; i >= x; i--)
+                    result.Add(matrix[i][y]);
+                y++;
+            }            
+        }        
+        return result;
     }
+}
