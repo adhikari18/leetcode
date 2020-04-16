@@ -1,85 +1,46 @@
 /*
 54. Spiral Matrix
-https://leetcode.com/problems/spiral-matrix/
-Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
-
-Example 1:
-Input:
-[
- [ 1, 2, 3 ],
- [ 4, 5, 6 ],
- [ 7, 8, 9 ]
-]
-Output: [1,2,3,6,9,8,7,4,5]
-Example 2:
-Input:
-[
-  [1, 2, 3, 4],
-  [5, 6, 7, 8],
-  [9,10,11,12]
-]
-Output: [1,2,3,4,8,12,11,10,9,5,6,7]
-*/
-
+https://leetcode.com/problems/spiral-matrix/*/
 
     public class Solution
     {
         public IList<int> SpiralOrder(int[][] matrix)
         {
+            var result = new List<int>();
             if (matrix == null || matrix.Length == 0)
-                return new List<int>();
-
-            return SpiralOrder(matrix, 0, 0, matrix.Length, matrix[0].Length);
-        }
-        public IList<int> SpiralOrder(int[][] matrix, int x, int y, int m, int n)
-        {
-            List<int> result = new List<int>();
-
-            if (m <= 0 || n <= 0)
                 return result;
 
-            //only one element left
-            if (m == 1 && n == 1)
+            var x = 0; var y = 0;
+            var xMax = matrix.Length;
+            var yMax = matrix[0].Length;
+            while (x < xMax && y < yMax)
             {
-                result.Add(matrix[x][y]);
-                return result;
-            }
+                // first row
+                for (var i = y; i < yMax; i++) 
+                   result.Add(matrix[x][i]);
+                x++;
 
-            //top - move right
-            for (int i = 0; i < n - 1; i++)
-            {
-                result.Add(matrix[x][y++]);
-            }
+                // last column
+                for (var i = x; i < xMax; i++)
+                    result.Add(matrix[i][yMax - 1]);
+                yMax--;
 
-            //right - move down
-            for (int i = 0; i < m - 1; i++)
-            {
-                result.Add(matrix[x++][y]);
-            }
-
-            //bottom - move left
-            if (m > 1)
-            {
-                for (int i = 0; i < n - 1; i++)
+                // last row
+                if (x < xMax)
                 {
-                    result.Add(matrix[x][y--]);
+                    for (var i = yMax - 1; i >= y; i--)
+                        result.Add(matrix[xMax - 1][i]);
+                    xMax--;
+                }
+
+                // first column
+                if (y < yMax)
+                {
+                    for (var i = xMax - 1; i >= x; i--)
+                        result.Add(matrix[i][y]);
+                    y++;
                 }
             }
-
-            //left - move up
-            if (n > 1)
-            {
-                for (int i = 0; i < m - 1; i++)
-                {
-                    result.Add(matrix[x--][y]);
-                }
-            }
-
-            if (m == 1 || n == 1)
-                result.AddRange(SpiralOrder(matrix, x, y, 1, 1));
-            else
-                result.AddRange(SpiralOrder(matrix, x + 1, y + 1, m - 2, n - 2));
-
             return result;
         }
     }
