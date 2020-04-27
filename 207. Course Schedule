@@ -1,0 +1,51 @@
+//207. Course Schedule
+//https://leetcode.com/problems/course-schedule
+//The reason we start with a node that has indegree of 0 is because that mean the course has no dependencies
+/*
+BFS Solution: (Topological sorting)
+
+The basic idea is to use Topological algorithm: put NODE with 0 indgree into the queue, then make indegree of NODE's successor dereasing 1. Keep the above steps with BFS.
+
+Finally, if each node' indgree equals 0, then it is validated DAG (Directed Acyclic Graph), which means the course schedule can be finished.
+*/
+
+    public class Solution
+    {
+        public bool CanFinish(int numCourses, int[][] prerequisites)
+        {
+            if (numCourses <= 0)
+                return false;
+            Queue<int> queue = new Queue<int>();
+            int[] inDegree = new int[numCourses];
+            for (int i = 0; i < prerequisites.Length; i++)
+            {
+                inDegree[prerequisites[i][1]]++;
+            }
+            for (int i = 0; i < inDegree.Length; i++)
+            {
+                if (inDegree[i] == 0)
+                    queue.Enqueue(i);
+            }
+            var count = 0;
+            while (queue.Count > 0)
+            {
+                int x = queue.Dequeue();
+                count++;
+                for (int i = 0; i < prerequisites.Length; i++)
+                {
+                    if (x == prerequisites[i][0])
+                    {
+                        inDegree[prerequisites[i][1]]--;
+                        if (inDegree[prerequisites[i][1]] == 0)
+                            queue.Enqueue(prerequisites[i][1]);
+                    }
+                }
+            }
+            return count == numCourses;
+            /*for (int i = 0; i < inDegree.Length; i++) {
+				if (inDegree[i] != 0)
+					return false;
+			}
+			return true;*/
+        }
+    }
