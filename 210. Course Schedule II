@@ -1,0 +1,64 @@
+//210. Course Schedule II
+//https://leetcode.com/problems/course-schedule-ii
+
+public class Solution
+{
+  public int[] FindOrder(int numCourses, int[][] prerequisites)
+    {
+        int len = prerequisites.Length;
+
+        //if there is no prerequisites, return a sequence of courses
+        if (len == 0)
+        {
+            int[] res = new int[numCourses];
+            for (int m = 0; m < numCourses; m++)
+            {
+                res[m] = m;
+            }
+            return res;
+        }
+
+        //records the number of prerequisites each course (0,...,numCourses-1) requires
+        int[] pCounter = new int[numCourses];
+        for (int i = 0; i < len; i++)
+        {
+            pCounter[prerequisites[i][0]]++;
+        }
+
+        //stores courses that have no prerequisites
+        var queue = new Queue<int>();
+        for (int i = 0; i < numCourses; i++)
+        {
+            if (pCounter[i] == 0)
+            {
+                queue.Enqueue(i);
+            }
+        }
+
+        int visited = 0;
+
+        //initialize result
+        int[] result = new int[numCourses];
+        int j = 0;
+
+        while (queue.Count > 0)
+        {
+            int course = queue.Dequeue();
+            result[visited++] = course;
+
+            for (int i = 0; i < len; i++)
+            {
+                if (prerequisites[i][1] == course)
+                {
+                    pCounter[prerequisites[i][0]]--;
+                    if (pCounter[prerequisites[i][0]] == 0)
+                    {
+                        queue.Enqueue(prerequisites[i][0]);
+                    }
+                }
+            }
+        }
+    
+        return visited == numCourses ? result : new int[0];
+    }
+}
