@@ -1,0 +1,27 @@
+//547. Friend Circles
+//https://leetcode.com/problems/friend-circles
+
+public class Solution {
+    public int FindCircleNum(int[][] M) {
+        var count = 0;
+        for(var i = 0; i < M.Length; i++)
+        {
+            if(M[i][i] == 1)
+            {
+                DFS(M, i);
+                count++;
+            }
+        }
+        return count;
+    }
+    private void DFS(int[][] M, int i)
+    {
+        for(var j = 0; j < M.Length; j++)
+        {
+            if(M[i][j] == 1){
+                M[i][j] = M[j][i] = 0;
+                DFS(M, j);
+            }
+        }
+    }
+}
