@@ -1,0 +1,28 @@
+//797. All Paths From Source to Target
+//https://leetcode.com/problems/all-paths-from-source-to-target/
+//backtrack
+
+public class Solution {
+    public IList<IList<int>> AllPathsSourceTarget(int[][] graph) {
+        var res = new List<IList<int>>();
+        var path = new List<int>();
+        path.Add(0);        
+        DFS(graph, 0, res, path);        
+        return res;
+    }
+
+    public void DFS(int[][] graph, int node, IList<IList<int>> res, IList<int> path) 
+    {               
+        if (node == graph.Length - 1)
+        {            
+            res.Add(new List<int>(path));
+            return;
+        }
+        foreach (int nextNode in graph[node]) 
+        {
+            path.Add(nextNode);
+            DFS(graph, nextNode, res, path);
+            path.RemoveAt(path.Count - 1);
+        }
+    }
+}
