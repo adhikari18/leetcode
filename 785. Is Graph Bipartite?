@@ -1,0 +1,54 @@
+//785. Is Graph Bipartite?
+//https://leetcode.com/problems/is-graph-bipartite
+
+//DFS
+public class Solution {
+    public bool IsBipartite(int[][] graph) {
+        var len = graph.Length;
+        var colors = new int[len];
+        for(var i = 0; i < len; i++)
+        {
+            if(colors[i] == 0 && !DFS(graph, colors, 1, i))
+                return false;
+        }
+        return true;        
+    }
+    private bool DFS(int[][] graph, int[] colors, int color, int pos){
+        if(colors[pos] != 0)
+            return colors[pos] == color;
+        colors[pos] = color;
+        foreach(var neighbor in graph[pos]){
+            if(!DFS(graph, colors, -color, neighbor))
+               return false;
+        }
+        return true;
+    }
+}
+
+//BFS - 1 trick to iterate over all nodes to capture disconnected nodes
+public class Solution {
+    public bool IsBipartite(int[][] graph) {
+        var colors = new int[graph.Length];
+        //Iterate over all length to make sure it captures all Disconnected nodes
+        for (int i = 0; i < graph.Length; i++) {
+            if (graph[i].Length != 0 && colors[i] == 0) {
+                var queue = new Queue<int>();
+                queue.Enqueue(i);
+                colors[i] = 1;
+                while(queue.Count > 0){
+                    var node = queue.Dequeue();
+                    foreach(var neighbor in graph[node]){
+                        if(colors[neighbor] == 0)
+                        {
+                            colors[neighbor] = -colors[node];
+                            queue.Enqueue(neighbor);
+                        }
+                        else if(colors[node] == colors[neighbor])
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;        
+    }
+}
