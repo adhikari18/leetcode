@@ -1,0 +1,28 @@
+//1143. Longest Common Subsequence
+//https://leetcode.com/problems/longest-common-subsequence/
+//if char are same - remove both chars and add 1 to prev, if not same max of i-1, j-1 (in 1d dp , j-1 and j)
+//tip: capture temp = dp[j] in start of inner loop. Set prev = temp at the end. And account of "" "" strings, so dp len is len + 1 
+//and check is done in i-1, j-1 th chars.
+
+public class Solution {
+    public int LongestCommonSubsequence(string text1, string text2) {
+        var dp = new int[text2.Length + 1];
+        for(var i = 1; i <= text1.Length; i++)
+        {
+            var prev = 0;
+            for(var j = 1; j <= text2.Length; j++)
+            {
+                var temp = dp[j];
+                if(text1[i-1] == text2[j-1])
+                {
+                    dp[j] = prev + 1;
+                }
+                else {
+                    dp[j] = Math.Max(dp[j-1], dp[j]);
+                }
+                prev = temp;                
+            }
+        }
+        return dp[text2.Length];
+    }
+}
