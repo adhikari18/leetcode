@@ -1,0 +1,22 @@
+//621. Task Scheduler
+//https://leetcode.com/problems/task-scheduler/
+// count max freq and how many times it occured, 1 trick at the end, max of task length or (maxFreq - 1) * (n+1) + maxFreqCount 
+public class Solution {
+    public int LeastInterval(char[] tasks, int n) {
+        var map = new int[26];
+        foreach(var c in tasks){
+            map[c -'A']++;
+        }
+        Array.Sort(map);
+        var maxFreq = map[25];
+        var maxFreqCount = 1;
+        for(var i = 24; i >= 0; i--)
+        {
+            if(maxFreq == map[i]){
+                maxFreqCount++;
+            } else
+                break;
+        }
+        return Math.Max(tasks.Length, (maxFreq - 1) * (n + 1) + maxFreqCount);
+    }
+}
