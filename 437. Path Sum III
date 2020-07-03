@@ -1,0 +1,27 @@
+//437. Path Sum III
+//https://leetcode.com/problems/path-sum-iii/
+
+public class Solution {
+    public int PathSum(TreeNode root, int sum) {
+        if(root == null) return 0;
+        return PathSumFrom(root, sum) +
+            PathSum(root.left, sum) + PathSum(root.right, sum);
+            
+    }
+    private int PathSumFrom(TreeNode node, int sum)
+    {
+        if(node == null) return 0;
+        return (node.val == sum ? 1 : 0) + PathSumFrom(node.left, sum - node.val)
+            + PathSumFrom(node.right, sum - node.val);
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
