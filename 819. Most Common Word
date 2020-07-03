@@ -1,0 +1,50 @@
+//819. Most Common Word
+//https://leetcode.com/problems/most-common-word/
+
+public class Solution
+    {
+        public string MostCommonWord(string paragraph, string[] banned)
+        {
+            if (string.IsNullOrEmpty(paragraph))
+                return string.Empty;
+            paragraph = paragraph.ToLower()
+                .Replace("!", " ")
+                                 .Replace("?", " ")
+                                 .Replace("'", " ")
+                                 .Replace(",", " ")
+                                 .Replace(";", " ")
+                                 .Replace(".", " ")
+                                 .Trim();
+            var bannedHashset = new HashSet<string>();
+            foreach (var bannedString in banned)
+            {
+                bannedHashset.Add(bannedString);
+            }
+
+            
+            var paraStringArray = paragraph.Split(' ');
+            var wordCount = new Dictionary<string, int>();
+            for (var i = 0; i < paraStringArray.Length; i++)
+            {
+                var word = paraStringArray[i];
+                if (!string.IsNullOrEmpty(word) && !bannedHashset.Contains(word))
+                {
+                    if (wordCount.ContainsKey(word))
+                        wordCount[word] = wordCount[word] + 1;
+                    else
+                        wordCount.Add(word, 1);
+                }
+            }
+            var max = 0;
+            var result = string.Empty;
+            foreach (var key in wordCount.Keys)
+            {
+                if (wordCount[key] > max)
+                {
+                    max = wordCount[key];
+                    result = key;
+                }
+            }
+            return result;
+        }
+    }
