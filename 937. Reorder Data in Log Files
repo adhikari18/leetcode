@@ -1,0 +1,37 @@
+//937. Reorder Data in Log Files
+//https://leetcode.com/problems/reorder-data-in-log-files/
+
+    public class LogComparer : IComparer<string>
+    {
+        public int Compare(string a, string b)
+        {
+            var firstSpaceA = a.IndexOf(" ");
+            var firstSpaceB = b.IndexOf(" ");
+            var prefixA = a.Substring(0, firstSpaceA);
+            var subStrA = a.Substring(firstSpaceA + 1);
+            var prefixB = b.Substring(0, firstSpaceB);
+            var subStrB = b.Substring(firstSpaceB + 1);
+            var r = string.Compare(subStrA, subStrB);
+            return r == 0 ? string.Compare(prefixA, prefixB) : r;
+
+        }
+    }
+    public class Solution
+    {
+        public string[] ReorderLogFiles(string[] logs)
+        {
+            var letterLogs = new List<string>();
+            var digitLogs = new List<string>();
+            foreach(var log in logs)
+            {
+                if (Char.IsLetter(log.Split(' ')[1][0]))
+                    letterLogs.Add(log);
+                else digitLogs.Add(log);
+            }
+
+            letterLogs.Sort(new LogComparer());
+            letterLogs.AddRange(digitLogs);
+            return letterLogs.ToArray();
+
+        }
+    }
