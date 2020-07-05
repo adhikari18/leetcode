@@ -1,0 +1,50 @@
+//227. Basic Calculator II
+//https://leetcode.com/problems/basic-calculator-ii/
+
+  public class Solution
+    {
+        public int Calculate(string s)
+        {
+            if (string.IsNullOrEmpty(s)) return 0;
+            int num = 0;
+            int result = 0;
+            char op = '+';
+            var stack = new Stack<int>();
+            s = s + "+";
+            foreach (var ch in s)
+            {
+                if (ch == ' ') continue;
+
+                if (char.IsDigit(ch))
+                {
+                    num = num * 10 + (ch - '0');
+                }
+                else
+                {
+                    if (op == '+')
+                    {
+                        stack.Push(num);
+                    }
+                    else if (op == '-')
+                    {
+                        stack.Push(-num);
+                    }
+                    else if (op == '*')
+                    {
+                        stack.Push(stack.Pop() * num);
+                    }
+                    else if (op == '/')
+                    {
+                        stack.Push(stack.Pop() / num);
+                    }
+                    op = ch;
+                    num = 0;
+                }
+            }
+            while (stack.Count > 0)
+            {
+                result += stack.Pop();
+            }
+            return result;
+        }
+    }
