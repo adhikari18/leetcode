@@ -1,0 +1,29 @@
+//763. Partition Labels
+//https://leetcode.com/problems/partition-labels/
+
+public class Solution {
+    public IList<int> PartitionLabels(string S) {
+        var partitionList = new List<int>();
+        var map = new int[26];
+        
+        for(var i = 0; i < S.Length; i++)
+        {
+            map[S[i] - 'a'] = i;
+        }
+        
+        var start = 0;
+        var last = 0;
+        for(var i = 0; i < S.Length; i++)
+        {
+            last = Math.Max(last, map[S[i] - 'a']);
+            if(last == i)
+            {
+                partitionList.Add(last - start + 1);
+                start = last + 1;
+            }
+        }
+        return partitionList;
+    }
+}
+//Imagine a bus moving forward, and imagine each char as a person yelling "I need to go that far!". If a newcomer yelled a further position, we extend our expected ending 
+//position to that position. Eventually, if we reached a position that satisfied everybody in the bus at the moment, we partition and clear the bus.
