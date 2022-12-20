@@ -1,0 +1,23 @@
+public int MaximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+var remaining = new int[capacity.Length];
+for(var i = 0; i < capacity.Length; i++)
+{
+    remaining[i] = capacity[i] - rocks[i];
+}
+Array.Sort(remaining);
+var result = 0;
+    foreach (var rr in remaining)
+    {
+        if(rr == 0)
+        result++;
+        else if (additionalRocks <= 0)
+            break;
+        else
+        {
+            if (additionalRocks >= rr)
+                result++;
+            additionalRocks -= rr;
+        }
+    }
+    return result;
+}
