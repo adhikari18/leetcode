@@ -1,0 +1,21 @@
+public string FrequencySort(string s) {
+    var map = new Dictionary<char, int>();
+
+    foreach(var ch in s) {
+        if(map.ContainsKey(ch)){
+            map[ch]++;
+        }
+        else {
+            map[ch]=1;
+        }            
+    }
+    map = map.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+    var sb = new StringBuilder();
+
+    foreach (var key in map.Keys)
+    {
+        for(var i = 0; i < map[key]; i++)
+            sb.Append(key);
+    }
+    return sb.ToString();
+}
